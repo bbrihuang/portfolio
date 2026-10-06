@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Projects</title>
+  </head>
+  <body>
+    <h1>Projects</h1>
+    <ul>
+      {projects.map((p) => (
+        <li>
+          <a href={`/projects/${p.id}/`}>{p.data.title}</a>: {p.data.description}
+        </li>
+      ))}
+    </ul>
+  </body>
+</html>
