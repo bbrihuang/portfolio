@@ -5,6 +5,8 @@
 
 export const profile = {
   name: 'Brian Huang',
+  // The big greeting at the top of the homepage.
+  greeting: "Hi, I'm Brian",
   status: 'Computer Engineering @ Boston University · Class of 2029',
   headline: 'Computer engineering student building across software, hardware, and propulsion.',
   bio: 'I study Computer Engineering at Boston University. I design rocket nozzle components with the BU Rocket Propulsion Group, keep campus media labs running at BU TechOps, run a custom PC building business called Cubic Builds, and build web apps that solve problems I actually have.',

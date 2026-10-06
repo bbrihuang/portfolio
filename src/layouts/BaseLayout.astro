@@ -40,7 +40,6 @@ const year = new Date().getFullYear();
       <div class="container nav-inner">
         <a href="/" class="brand" aria-label={`${profile.name}, home`}>
           <img src="/logo.png" alt="" width="32" height="32" />
-          <span>{profile.name}</span>
         </a>
 
         <nav class="nav-links" aria-label="Main">
@@ -102,11 +101,6 @@ const year = new Date().getFullYear();
   .brand {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 17px;
-    letter-spacing: -0.01em;
   }
   .brand img {
     width: 32px;
