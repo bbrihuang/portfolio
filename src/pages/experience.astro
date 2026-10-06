@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { experience } from '../data/profile';
+---
+
+<BaseLayout title="Experience" description="Where I've worked.">
+  <section class="page-head">
+    <div class="container">
+      <p class="section-label">02 / Experience</p>
+      <h1 class="page-title">Where I've worked</h1>
+    </div>
+  </section>
+
+  <section class="page-body">
+    <div class="container">
+      <ol class="timeline">
+        {experience.map((job) => (
+          <li class="job">
+            <p class="when mono">{job.period}</p>
+            <div>
+              <h3>{job.role}</h3>
+              <p class="where">{job.company} · {job.location}</p>
+              <ul class="points">
+                {job.points.map((pt) => <li>{pt}</li>)}
+              </ul>
+              <ul class="tags">
+                {job.tech.map((t) => <li>{t}</li>)}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .job {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 32px;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+  }
+  .job:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .when {
+    font-size: 13px;
+    color: var(--faint);
+    padding-top: 6px;
+  }
+  h3 {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .where {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .points {
+    margin: 14px 0 16px;
+    padding-left: 1.1em;
+    color: var(--text-2);
+    font-size: 15px;
+    max-width: 720px;
+  }
+  .points li + li {
+    margin-top: 6px;
+  }
+  .points li::marker {
+    color: var(--faint);
+  }
+
+  @media (max-width: 760px) {
+    .job {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .when {
+      padding-top: 0;
+    }
+  }
+</style>

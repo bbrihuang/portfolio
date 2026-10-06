@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { profile, education } from '../data/profile';
+---
+
+<BaseLayout title="Education" description="Education, coursework, and skills.">
+  <section class="page-head">
+    <div class="container">
+      <p class="section-label">03 / Education & skills</p>
+      <h1 class="page-title">Background</h1>
+    </div>
+  </section>
+
+  <section class="page-body">
+    <div class="container edu-grid">
+      <div class="card edu">
+        <p class="mono small">{education.period}</p>
+        <h3>{education.school}</h3>
+        <p class="where">{education.degree} · {education.location}</p>
+        <p class="sub">Relevant coursework</p>
+        <ul class="tags">
+          {education.coursework.map((c) => <li>{c}</li>)}
+        </ul>
+        <p class="sub">Languages</p>
+        <ul class="tags">
+          {education.languages.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+      <div class="card edu">
+        <p class="mono small">Toolkit</p>
+        {Object.entries(profile.skills).map(([group, items]) => (
+          <>
+            <p class="sub">{group}</p>
+            <ul class="tags">
+              {items.map((s) => <li>{s}</li>)}
+            </ul>
+          </>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 20px;
+  }
+  .edu {
+    padding: 28px;
+  }
+  h3 {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .where {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .small {
+    font-size: 12px;
+    color: var(--faint);
+    margin-bottom: 10px;
+  }
+  .sub {
+    margin: 22px 0 10px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+  }
+
+  @media (max-width: 760px) {
+    .edu-grid {
+      grid-template-columns: 1fr;
+    }
+    .edu {
+      padding: 22px;
+    }
+  }
+</style>

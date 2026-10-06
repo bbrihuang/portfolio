@@ -171,6 +171,31 @@ img {
   color: var(--text);
 }
 
+/* ─── Page header: top of Projects / Experience / Education / Contact ─── */
+.page-head {
+  padding: 96px 0 48px;
+}
+.page-title {
+  font-size: clamp(44px, 7vw, 72px);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+.lede {
+  margin-top: 20px;
+  font-size: 19px;
+  color: var(--muted);
+  max-width: 560px;
+}
+.page-body {
+  padding-bottom: 112px;
+}
+@media (max-width: 760px) {
+  .page-head {
+    padding: 64px 0 36px;
+  }
+}
+
 /* ─── Tags ─── */
 .tags {
   display: flex;

@@ -11,13 +11,13 @@ const projects = (await getCollection('projects')).sort(
 <BaseLayout title="Projects" description="Everything I've built: software, hardware, aerospace, and writing.">
   <section class="page-head">
     <div class="container">
-      <p class="section-label">Index / {projects.length} projects</p>
-      <h1>Projects</h1>
+      <p class="section-label">01 / {projects.length} projects</p>
+      <h1 class="page-title">Projects</h1>
       <p class="lede">Everything I've built, newest first: software, hardware, aerospace, and writing.</p>
     </div>
   </section>
 
-  <section class="list">
+  <section class="page-body">
     <div class="container grid">
       {projects.map((project, i) => <ProjectCard project={project} index={i} />)}
     </div>
@@ -25,33 +25,12 @@ const projects = (await getCollection('projects')).sort(
 </BaseLayout>
 
 <style>
-  .page-head {
-    padding: 96px 0 48px;
-  }
-  h1 {
-    font-size: clamp(52px, 9vw, 96px);
-    font-weight: 800;
-    letter-spacing: -0.045em;
-    line-height: 0.95;
-  }
-  .lede {
-    margin-top: 20px;
-    font-size: 19px;
-    color: var(--muted);
-    max-width: 560px;
-  }
-  .list {
-    padding-bottom: 112px;
-  }
   .grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
   }
   @media (max-width: 760px) {
-    .page-head {
-      padding: 64px 0 36px;
-    }
     .grid {
       grid-template-columns: 1fr;
     }

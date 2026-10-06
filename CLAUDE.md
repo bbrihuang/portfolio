@@ -7,11 +7,11 @@ Brian is a BU Computer Engineering student who is new to coding. Explain changes
 
 ## Where things live
 - `src/data/profile.ts` — name, bio, socials, metrics, experience, education, skills
-- `src/content/projects/*.md` — one file per project (schema in `src/content.config.ts`); `featured: true` puts it on the homepage
+- `src/content/projects/*.md` — one file per project (schema in `src/content.config.ts`)
 - `src/styles/global.css` — design tokens (colors, fonts, spacing) at the top
 - `src/layouts/BaseLayout.astro` — nav, footer, `<head>`
 - `src/components/ProjectCard.astro` — project card
-- `src/pages/index.astro`, `src/pages/projects/` — pages
+- `src/pages/index.astro` (intro only), `projects/`, `experience.astro`, `education.astro`, `contact.astro` — one page per nav button
 
 ## Rules
 - Keep content in the data/markdown files, not hardcoded in pages.

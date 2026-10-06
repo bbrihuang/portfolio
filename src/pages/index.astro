@@ -1,12 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import { getCollection } from 'astro:content';
-import { profile, experience, education } from '../data/profile';
-
-const featured = (await getCollection('projects'))
-  .filter((p) => p.data.featured)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+import { profile } from '../data/profile';
 ---
 
 <BaseLayout>
@@ -23,11 +17,11 @@ const featured = (await getCollection('projects'))
         <p class="bio">{profile.bio}</p>
 
         <div class="ctas">
-          <a href="#work" class="btn btn-primary">
+          <a href="/projects/" class="btn btn-primary">
             View my work
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <a href="#contact" class="btn">Get in touch</a>
+          <a href="/contact/" class="btn">Get in touch</a>
           {profile.resume && <a href={profile.resume} class="btn" target="_blank" rel="noopener">Resume</a>}
         </div>
       </div>
@@ -80,104 +74,6 @@ const featured = (await getCollection('projects'))
     </div>
   </section>
 
-  <!-- ─── 01 Work ─── -->
-  <section id="work" class="section">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="section-label">01 / Selected work</p>
-          <h2 class="section-title">Projects</h2>
-        </div>
-        <a href="/projects/" class="section-link">All projects →</a>
-      </div>
-      <div class="grid">
-        {featured.map((project, i) => <ProjectCard project={project} index={i} />)}
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── 02 Experience ─── -->
-  <section id="experience" class="section">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="section-label">02 / Experience</p>
-          <h2 class="section-title">Where I've worked</h2>
-        </div>
-      </div>
-      <ol class="timeline">
-        {experience.map((job) => (
-          <li class="job">
-            <p class="when mono">{job.period}</p>
-            <div>
-              <h3>{job.role}</h3>
-              <p class="where">{job.company} · {job.location}</p>
-              <ul class="points">
-                {job.points.map((pt) => <li>{pt}</li>)}
-              </ul>
-              <ul class="tags">
-                {job.tech.map((t) => <li>{t}</li>)}
-              </ul>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <!-- ─── 03 Education & skills ─── -->
-  <section id="education" class="section">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <p class="section-label">03 / Education & skills</p>
-          <h2 class="section-title">Background</h2>
-        </div>
-      </div>
-      <div class="edu-grid">
-        <div class="card edu">
-          <p class="mono small">{education.period}</p>
-          <h3>{education.school}</h3>
-          <p class="where">{education.degree} · {education.location}</p>
-          <p class="sub">Relevant coursework</p>
-          <ul class="tags">
-            {education.coursework.map((c) => <li>{c}</li>)}
-          </ul>
-          <p class="sub">Languages</p>
-          <ul class="tags">
-            {education.languages.map((c) => <li>{c}</li>)}
-          </ul>
-        </div>
-        <div class="card edu">
-          <p class="mono small">Toolkit</p>
-          {Object.entries(profile.skills).map(([group, items]) => (
-            <>
-              <p class="sub">{group}</p>
-              <ul class="tags">
-                {items.map((s) => <li>{s}</li>)}
-              </ul>
-            </>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── 04 Contact ─── -->
-  <section id="contact" class="section contact">
-    <div class="container">
-      <p class="section-label">04 / Contact</p>
-      <h2 class="big">Let's build something.</h2>
-      <p class="contact-copy">
-        I'm looking for internships and interesting problems. The fastest way to reach me is email.
-      </p>
-      <a href={`mailto:${profile.email}`} class="email">{profile.email} →</a>
-      <div class="ctas">
-        <a href={profile.socials.linkedin} class="btn" target="_blank" rel="noopener">LinkedIn</a>
-        <a href={profile.socials.github} class="btn" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </div>
-  </section>
 </BaseLayout>
 
 <style>
@@ -201,7 +97,7 @@ const featured = (await getCollection('projects'))
     margin-bottom: 28px;
   }
   h1 {
-    font-size: clamp(40px, 6vw, 64px);
+    font-size: clamp(32px, 4.5vw, 46px);
     font-weight: 800;
     letter-spacing: -0.04em;
     line-height: 1.05;
@@ -357,114 +253,6 @@ const featured = (await getCollection('projects'))
     color: var(--faint);
   }
 
-  /* Projects grid */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-  }
-
-  /* Experience timeline */
-  .timeline {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .job {
-    display: grid;
-    grid-template-columns: 200px minmax(0, 1fr);
-    gap: 32px;
-    padding: 32px 0;
-    border-top: 1px solid var(--border);
-  }
-  .job:first-child {
-    border-top: 0;
-    padding-top: 0;
-  }
-  .when {
-    font-size: 13px;
-    color: var(--faint);
-    padding-top: 6px;
-  }
-  .job h3,
-  .edu h3 {
-    font-size: 22px;
-    font-weight: 700;
-  }
-  .where {
-    margin-top: 4px;
-    font-size: 14px;
-    color: var(--muted);
-  }
-  .points {
-    margin: 14px 0 16px;
-    padding-left: 1.1em;
-    color: var(--text-2);
-    font-size: 15px;
-    max-width: 720px;
-  }
-  .points li + li {
-    margin-top: 6px;
-  }
-  .points li::marker {
-    color: var(--faint);
-  }
-
-  /* Education */
-  .edu-grid {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: 20px;
-  }
-  .edu {
-    padding: 28px;
-  }
-  .small {
-    font-size: 12px;
-    color: var(--faint);
-    margin-bottom: 10px;
-  }
-  .sub {
-    margin: 22px 0 10px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--faint);
-  }
-
-  /* Contact */
-  .contact {
-    padding-bottom: 120px;
-  }
-  .big {
-    font-size: clamp(44px, 8vw, 96px);
-    font-weight: 800;
-    letter-spacing: -0.045em;
-    line-height: 0.98;
-    margin-top: 6px;
-  }
-  .contact-copy {
-    margin-top: 24px;
-    color: var(--muted);
-    font-size: 18px;
-    max-width: 560px;
-  }
-  .email {
-    display: inline-block;
-    margin-top: 28px;
-    font-family: var(--font-display);
-    font-size: clamp(22px, 3.4vw, 32px);
-    font-weight: 600;
-    border-bottom: 2px solid var(--border-strong);
-    padding-bottom: 4px;
-    transition: border-color 0.15s;
-    overflow-wrap: anywhere;
-  }
-  .email:hover {
-    border-color: var(--text);
-  }
-
   @media (max-width: 960px) {
     .hero-grid {
       grid-template-columns: 1fr;
@@ -482,20 +270,6 @@ const featured = (await getCollection('projects'))
       grid-template-columns: repeat(2, minmax(0, 1fr));
       row-gap: 28px;
       margin-top: 56px;
-    }
-    .grid,
-    .edu-grid {
-      grid-template-columns: 1fr;
-    }
-    .job {
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-    .when {
-      padding-top: 0;
-    }
-    .edu {
-      padding: 22px;
     }
   }
 </style>
