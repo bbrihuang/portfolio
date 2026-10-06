@@ -1,4 +1,5 @@
 ---
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -13,19 +14,12 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{project.data.title}</title>
-  </head>
-  <body>
-    <a href="/projects/">← All projects</a>
-    <h1>{project.data.title}</h1>
-    <p>{project.data.description}</p>
-    <p>Built with: {project.data.tech.join(', ')}</p>
-    {project.data.repo && <a href={project.data.repo}>View code</a>}
-    {project.data.live && <a href={project.data.live}>Live demo</a>}
-    <Content />
-  </body>
-</html>
+<BaseLayout title={project.data.title}>
+  <a href="/projects/">← All projects</a>
+  <h1>{project.data.title}</h1>
+  <p>{project.data.description}</p>
+  <p>Built with: {project.data.tech.join(', ')}</p>
+  {project.data.repo && <a href={project.data.repo}>View code</a>}
+  {project.data.live && <a href={project.data.live}>Live demo</a>}
+  <Content />
+</BaseLayout>

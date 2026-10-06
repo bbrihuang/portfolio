@@ -1,11 +1,23 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const projects = (await getCollection('projects'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
 ---
 
-<Layout>
-	<Brian Huang />
-</Layout>
+<BaseLayout title="Brian Huang">
+  <h1>Brian Huang</h1>
+  <p>Engineering student at Boston University. I build software that solves real problems.</p>
+
+  <h2>Recent projects</h2>
+  <ul>
+    {projects.map((p) => (
+      <li>
+        <a href={`/projects/${p.id}/`}>{p.data.title}</a>: {p.data.description}
+      </li>
+    ))}
+  </ul>
+  <p><a href="/projects/">See all projects →</a></p>
+</BaseLayout>
