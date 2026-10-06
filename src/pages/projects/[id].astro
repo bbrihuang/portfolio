@@ -12,14 +12,173 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
+const p = project.data;
+const when = p.period ?? String(p.date.getFullYear());
 ---
 
-<BaseLayout title={project.data.title}>
-  <a href="/projects/">← All projects</a>
-  <h1>{project.data.title}</h1>
-  <p>{project.data.description}</p>
-  <p>Built with: {project.data.tech.join(', ')}</p>
-  {project.data.repo && <a href={project.data.repo}>View code</a>}
-  {project.data.live && <a href={project.data.live}>Live demo</a>}
-  <Content />
+<BaseLayout title={p.title} description={p.description}>
+  <article>
+    <header class="head">
+      <div class="container">
+        <a href="/projects/" class="back">← All projects</a>
+        <p class="kicker mono">
+          <span class="swatch" style={`background:${p.accent ?? 'var(--muted)'}`}></span>
+          {p.category ?? 'Project'} · {when}
+        </p>
+        <h1>{p.title}</h1>
+        <p class="lede">{p.description}</p>
+
+        {(p.repo || p.live) && (
+          <div class="links">
+            {p.live && <a href={p.live} class="btn btn-primary" target="_blank" rel="noopener">View live ↗</a>}
+            {p.repo && <a href={p.repo} class="btn" target="_blank" rel="noopener">View code ↗</a>}
+          </div>
+        )}
+      </div>
+    </header>
+
+    <div class="container body">
+      <aside class="meta">
+        {p.role && (
+          <div>
+            <p class="label">Role</p>
+            <p>{p.role}</p>
+          </div>
+        )}
+        {p.organization && (
+          <div>
+            <p class="label">Where</p>
+            <p>{p.organization}</p>
+          </div>
+        )}
+        <div>
+          <p class="label">When</p>
+          <p>{when}</p>
+        </div>
+        <div>
+          <p class="label">Stack</p>
+          <ul class="tags">
+            {p.tech.map((t) => <li>{t}</li>)}
+          </ul>
+        </div>
+        {p.metrics?.map((m) => (
+          <div>
+            <p class="label">{m.label}</p>
+            <p class="metric mono">{m.value}</p>
+          </div>
+        ))}
+      </aside>
+
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
 </BaseLayout>
+
+<style>
+  .head {
+    padding: 72px 0 56px;
+    border-bottom: 1px solid var(--border);
+  }
+  .back {
+    display: inline-block;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+  .back:hover {
+    color: var(--text);
+  }
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--faint);
+    margin-bottom: 18px;
+  }
+  .swatch {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  h1 {
+    font-size: clamp(44px, 7.5vw, 84px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.98;
+    max-width: 900px;
+  }
+  .lede {
+    margin-top: 22px;
+    font-size: clamp(18px, 2.2vw, 21px);
+    color: var(--text-2);
+    max-width: 680px;
+    line-height: 1.5;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 32px;
+  }
+  .body {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 64px;
+    padding-top: 56px;
+    padding-bottom: 120px;
+  }
+  .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    font-size: 15px;
+    color: var(--text-2);
+    align-self: start;
+    position: sticky;
+    top: 100px;
+  }
+  .label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+    margin-bottom: 6px;
+  }
+  .metric {
+    font-size: 20px;
+    color: var(--text);
+  }
+  .prose {
+    max-width: 700px;
+  }
+  .prose :global(h2:first-child) {
+    margin-top: 0;
+  }
+  @media (max-width: 860px) {
+    .body {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding-top: 40px;
+    }
+    .meta {
+      position: static;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+  }
+  @media (max-width: 640px) {
+    .head {
+      padding: 48px 0 40px;
+    }
+    .back {
+      margin-bottom: 28px;
+    }
+  }
+</style>

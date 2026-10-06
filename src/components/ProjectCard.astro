@@ -1,0 +1,111 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const p = project.data;
+const num = String(index + 1).padStart(2, '0');
+const when = p.period ?? String(p.date.getFullYear());
+---
+
+<a href={`/projects/${project.id}/`} class="pcard card">
+  <div class="top mono">
+    <span class="cat">
+      <span class="swatch" style={`background:${p.accent ?? 'var(--muted)'}`}></span>
+      {num} · {p.category ?? 'Project'}
+    </span>
+    <span>{when}</span>
+  </div>
+
+  <h3>{p.title}</h3>
+  {p.organization && <p class="org">{p.organization}</p>}
+  <p class="desc">{p.description}</p>
+
+  <ul class="tags">
+    {p.tech.slice(0, 4).map((t) => <li>{t}</li>)}
+  </ul>
+
+  <span class="more">
+    Read case study
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </span>
+</a>
+
+<style>
+  .pcard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px;
+    transition: border-color 0.2s, transform 0.2s, background 0.2s;
+    min-width: 0;
+  }
+  .pcard:hover {
+    border-color: var(--border-strong);
+    background: #161616;
+    transform: translateY(-2px);
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--faint);
+    margin-bottom: 12px;
+  }
+  .cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .swatch {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  h3 {
+    font-size: 26px;
+    font-weight: 700;
+  }
+  .org {
+    font-size: 13px;
+    color: var(--faint);
+    margin-top: -4px;
+  }
+  .desc {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .tags {
+    margin-top: 6px;
+  }
+  .more {
+    margin-top: auto;
+    padding-top: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-2);
+  }
+  .pcard:hover .more svg {
+    transform: translateX(3px);
+  }
+  .more svg {
+    transition: transform 0.2s;
+  }
+  @media (max-width: 640px) {
+    .pcard {
+      padding: 22px;
+    }
+    h3 {
+      font-size: 23px;
+    }
+  }
+</style>
