@@ -34,12 +34,21 @@ export const profile = {
     Hardware: ['PC assembly', 'Custom watercooling', 'Overclocking', '3D printing', 'Hardware diagnostics'],
   },
 
+  // The profile card in the intro (photo lives at public/avatar.jpg).
+  card: {
+    photo: '/avatar.jpg',
+    handle: 'in/bbrihuang',
+    school: 'Boston University · Class of ’29',
+    tags: 'BURPG · Cubic Builds',
+  },
+
   // The little terminal card in the intro.
+  // icon can be: 'terminal', 'rocket', 'wrench', 'chip'
   terminal: [
-    { cmd: 'whoami', out: 'Brian Huang · Computer Engineering ’29' },
-    { cmd: 'propulsion --team', out: 'BURPG · Nozzle Design Engineer' },
-    { cmd: 'ventures --list', out: 'Cubic Builds · custom PCs' },
-    { cmd: 'work --current', out: 'BU COM TechOps · Programs Assistant' },
+    { icon: 'terminal', color: '#a3a3a3', cmd: 'whoami', out: '> Brian Huang · Computer Engineering ’29', bold: true },
+    { icon: 'rocket', color: '#ef4444', cmd: 'propulsion --team', out: 'BURPG · Nozzle Design Engineer' },
+    { icon: 'wrench', color: '#3b82f6', cmd: 'ventures --custom', out: 'Cubic Builds · $1,000+ Custom Rig Revenue' },
+    { icon: 'chip', color: '#a3a3a3', cmd: 'techops --role', out: 'BU COM TechOps Center · Programs Assistant' },
   ],
 };
 
