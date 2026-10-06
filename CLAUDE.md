@@ -1,3 +1,25 @@
+# Brian Huang — portfolio site
+
+Personal portfolio built with Astro, deployed on Vercel (pushing to `master` on GitHub deploys automatically).
+
+## About the owner
+Brian is a BU Computer Engineering student who is new to coding. Explain changes in plain language, say which files you touched and why, and avoid jargon without a short explanation.
+
+## Where things live
+- `src/data/profile.ts` — name, bio, socials, metrics, experience, education, skills
+- `src/content/projects/*.md` — one file per project (schema in `src/content.config.ts`); `featured: true` puts it on the homepage
+- `src/styles/global.css` — design tokens (colors, fonts, spacing) at the top
+- `src/layouts/BaseLayout.astro` — nav, footer, `<head>`
+- `src/components/ProjectCard.astro` — project card
+- `src/pages/index.astro`, `src/pages/projects/` — pages
+
+## Rules
+- Keep content in the data/markdown files, not hardcoded in pages.
+- Design: dark, minimal, bold. Near-black background, Outfit / Plus Jakarta Sans / JetBrains Mono (self-hosted via @fontsource). No heavy graphics or animation.
+- Never invent achievements, metrics, or certifications. Only use facts Brian provides; leave a TODO comment when something is missing.
+- Run `npm run build` to confirm the site builds before committing.
+- Commit with clear messages. Ask before pushing, since pushing publishes the live site.
+
 ## Development
 
 When starting the dev server, use background mode:
